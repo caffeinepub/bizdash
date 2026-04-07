@@ -1,0 +1,41 @@
+// Version: 1.0.0
+type ActivityEvent__961576867 =
+  {
+    description : Text;
+    eventType : Text;
+    id : Nat;
+    timestamp : Timestamp__532962028;
+    userId : ?Nat
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Timestamp__532962028 = Int;
+type UserPlan__1002252231 = {#enterprise; #free; #pro; #starter};
+type UserStatus__330923043 = {#active; #churned; #inactive};
+type User__558077256 =
+  {
+    email : Text;
+    id : Nat;
+    lastActive : Text;
+    name : Text;
+    pageViewsLast30Days : Nat;
+    plan : UserPlan__1002252231;
+    sessionsLast30Days : Nat;
+    signupDate : Text;
+    status : UserStatus__330923043;
+    totalRevenue : Float
+  };
+actor {
+  stable events :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?ActivityEvent__961576867]];
+      var elementIndex : Nat__490723111
+    };
+  stable users :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?User__558077256]];
+      var elementIndex : Nat__490723111
+    }
+};

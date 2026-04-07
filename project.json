@@ -1,0 +1,22 @@
+{
+  "overview": "BizDash is a business analytics dashboard for tracking revenue, managing users, and monitoring daily business performance with real-time insights and trend visualizations.",
+  "features": [
+    "Revenue KPI cards with 30-day sparkline trend charts",
+    "User directory with search, filters, and per-user detail pages",
+    "Business health metrics: churn rate, conversion rate, active users with period-over-period comparisons",
+    "Today's highlights: daily revenue, new signups, and activity feed",
+    "Global date range picker controlling all charts and metrics",
+    "Sidebar navigation with dark/light mode toggle"
+  ],
+  "category": "analytics-business-intelligence",
+  "tags": [
+    "analytics",
+    "dashboard",
+    "business",
+    "revenue",
+    "kpi",
+    "charts",
+    "dark-mode"
+  ],
+  "last_updated": "2026-04-07T21:43:18.978Z"
+}

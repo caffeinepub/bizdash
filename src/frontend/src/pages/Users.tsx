@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
 import { ChevronRight, Search, Users as UsersIcon } from "lucide-react";
 import { useMemo, useState } from "react";
-import { MOCK_USERS, useUsers } from "../hooks/useUsers";
+import { useUsers } from "../hooks/useUsers";
 import type { UserPlan, UserStatus } from "../types";
 
 // ─── Plan badge config ────────────────────────────────────────────────────────
@@ -166,7 +166,7 @@ function EmptyState({ hasFilters }: { hasFilters: boolean }) {
             <p className="text-sm text-muted-foreground mt-1">
               {hasFilters
                 ? "Try adjusting your search or filters"
-                : "No users have been added yet"}
+                : "No users yet — add your first user to get started"}
             </p>
           </div>
         </div>
@@ -184,7 +184,7 @@ export default function UsersPage() {
   const { data: users, isLoading } = useUsers();
 
   const filtered = useMemo(() => {
-    const source = users ?? MOCK_USERS;
+    const source = users ?? [];
     return source.filter((u) => {
       const matchSearch =
         !search ||
@@ -211,7 +211,7 @@ export default function UsersPage() {
             data-ocid="users-count-badge"
             className="inline-flex items-center justify-center min-w-[1.75rem] h-7 px-2 rounded-md bg-muted text-muted-foreground text-xs font-mono font-medium border border-border"
           >
-            {isLoading ? "—" : (users ?? MOCK_USERS).length}
+            {isLoading ? "—" : (users ?? []).length}
           </span>
         </div>
       </div>
@@ -441,7 +441,7 @@ export default function UsersPage() {
           <span className="text-foreground font-medium">{filtered.length}</span>{" "}
           of{" "}
           <span className="text-foreground font-medium">
-            {(users ?? MOCK_USERS).length}
+            {(users ?? []).length}
           </span>{" "}
           users
         </p>

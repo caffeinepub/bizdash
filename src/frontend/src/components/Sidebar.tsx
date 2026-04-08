@@ -3,77 +3,95 @@ import { Link } from "@tanstack/react-router";
 import { LayoutDashboard, Moon, Sun, Users } from "lucide-react";
 import { useThemeStore } from "../store/theme";
 
-interface SidebarProps {
-  collapsed: boolean;
-  width: number;
-}
-
 const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
   { to: "/users", label: "Users", icon: Users },
 ];
 
-export default function Sidebar({ collapsed, width }: SidebarProps) {
+export default function CircleNav() {
   const { theme, toggleTheme } = useThemeStore();
 
   return (
     <aside
       data-ocid="sidebar-nav"
-      className="flex flex-col h-full bg-sidebar border-r border-sidebar-border shrink-0"
-      style={{ width }}
+      aria-label="Main navigation"
+      className="flex flex-col items-center gap-2 py-4 px-2 h-full bg-sidebar border-r border-sidebar-border shrink-0 w-16 z-10"
     >
-      {/* Nav Items */}
-      <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
+      {/* Nav items */}
+      <nav
+        className="flex flex-col items-center gap-1.5 flex-1"
+        aria-label="Site pages"
+      >
         {navItems.map(({ to, label, icon: Icon }) => (
-          <Link
-            key={to}
-            to={to}
-            activeOptions={{ exact: to === "/" }}
-            className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-smooth",
-              "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-              "[&.active]:text-sidebar-primary [&.active]:bg-sidebar-accent",
-              collapsed && "justify-center px-2",
-            )}
-            title={collapsed ? label : undefined}
-          >
-            <Icon className="w-4 h-4 shrink-0" />
-            {!collapsed && <span className="truncate">{label}</span>}
-          </Link>
+          <div key={to} className="relative group">
+            <Link
+              to={to}
+              activeOptions={{ exact: to === "/" }}
+              aria-label={label}
+              data-ocid={`nav-item-${label.toLowerCase()}`}
+              className={cn(
+                "flex items-center justify-center w-10 h-10 rounded-full transition-smooth",
+                "text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent",
+                "[&.active]:text-sidebar-primary-foreground [&.active]:bg-sidebar-primary [&.active]:shadow-md",
+              )}
+            >
+              <Icon className="w-[18px] h-[18px] shrink-0" />
+            </Link>
+
+            {/* Tooltip */}
+            <div
+              role="tooltip"
+              className={cn(
+                "pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-3 z-50",
+                "px-2.5 py-1.5 rounded-md text-xs font-body font-medium whitespace-nowrap",
+                "bg-popover text-popover-foreground border border-border shadow-md",
+                "opacity-0 scale-95 transition-smooth",
+                "group-hover:opacity-100 group-hover:scale-100",
+              )}
+            >
+              {label}
+            </div>
+          </div>
         ))}
       </nav>
 
-      {/* Bottom controls */}
-      <div className="border-t border-sidebar-border px-2 py-3 shrink-0">
-        {/* Theme toggle */}
+      {/* Separator */}
+      <div className="w-6 h-px bg-sidebar-border shrink-0" />
+
+      {/* Theme toggle */}
+      <div className="shrink-0 relative group">
         <button
           type="button"
           data-ocid="theme-toggle"
           onClick={toggleTheme}
-          title={
-            collapsed
-              ? theme === "dark"
-                ? "Light mode"
-                : "Dark mode"
-              : undefined
+          aria-label={
+            theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
           }
           className={cn(
-            "w-full flex items-center rounded-md px-3 py-2.5 text-sm font-medium transition-smooth",
-            "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent",
-            collapsed ? "justify-center px-2" : "gap-3",
+            "flex items-center justify-center w-10 h-10 rounded-full transition-smooth",
+            "text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent",
           )}
         >
           {theme === "dark" ? (
-            <Sun className="w-4 h-4 shrink-0" />
+            <Sun className="w-[18px] h-[18px] shrink-0" />
           ) : (
-            <Moon className="w-4 h-4 shrink-0" />
-          )}
-          {!collapsed && (
-            <span className="truncate">
-              {theme === "dark" ? "Light mode" : "Dark mode"}
-            </span>
+            <Moon className="w-[18px] h-[18px] shrink-0" />
           )}
         </button>
+
+        {/* Tooltip */}
+        <div
+          role="tooltip"
+          className={cn(
+            "pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-3 z-50",
+            "px-2.5 py-1.5 rounded-md text-xs font-body font-medium whitespace-nowrap",
+            "bg-popover text-popover-foreground border border-border shadow-md",
+            "opacity-0 scale-95 transition-smooth",
+            "group-hover:opacity-100 group-hover:scale-100",
+          )}
+        >
+          {theme === "dark" ? "Light mode" : "Dark mode"}
+        </div>
       </div>
     </aside>
   );

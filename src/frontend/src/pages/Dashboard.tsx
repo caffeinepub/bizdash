@@ -471,8 +471,11 @@ export default function Dashboard() {
               data-ocid="kpi-empty"
             >
               <Activity className="w-10 h-10 text-muted-foreground mb-3 opacity-40" />
-              <p className="text-sm text-muted-foreground">
-                No revenue data available for this period.
+              <p className="text-sm font-medium text-foreground mb-1">
+                No revenue data yet
+              </p>
+              <p className="text-xs text-muted-foreground max-w-xs">
+                Add your first revenue entry to start tracking performance here.
               </p>
             </div>
           )}
@@ -518,8 +521,11 @@ export default function Dashboard() {
               data-ocid="health-empty"
             >
               <Activity className="w-10 h-10 text-muted-foreground mb-3 opacity-40" />
-              <p className="text-sm text-muted-foreground">
-                No health metrics available.
+              <p className="text-sm font-medium text-foreground mb-1">
+                No health metrics yet
+              </p>
+              <p className="text-xs text-muted-foreground max-w-xs">
+                Metrics will appear here once you have user and revenue data.
               </p>
             </div>
           )}
@@ -579,7 +585,8 @@ export default function Dashboard() {
                 >
                   <Activity className="w-8 h-8 text-muted-foreground mb-2 opacity-40" />
                   <p className="text-sm text-muted-foreground">
-                    No activity yet today.
+                    No activity yet today — events will appear here as they
+                    happen.
                   </p>
                 </div>
               ) : (
@@ -597,8 +604,12 @@ export default function Dashboard() {
             data-ocid="highlights-empty"
           >
             <Activity className="w-10 h-10 text-muted-foreground mb-3 opacity-40" />
-            <p className="text-sm text-muted-foreground">
-              No highlights available.
+            <p className="text-sm font-medium text-foreground mb-1">
+              No highlights yet today
+            </p>
+            <p className="text-xs text-muted-foreground max-w-xs">
+              Today's revenue, signups, and live activity will show up here once
+              data is entered.
             </p>
           </div>
         )}

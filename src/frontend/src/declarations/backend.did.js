@@ -8,176 +8,44 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const DateRange = IDL.Record({
-  'endDate' : IDL.Text,
-  'startDate' : IDL.Text,
-});
-export const HealthMetrics = IDL.Record({
-  'activeUsers' : IDL.Nat,
-  'activeUsersChange' : IDL.Float64,
-  'conversionRate' : IDL.Float64,
-  'conversionRateChange' : IDL.Float64,
-  'churnRate' : IDL.Float64,
-  'churnRateChange' : IDL.Float64,
-});
-export const DailyRevenue = IDL.Record({
-  'date' : IDL.Text,
-  'amount' : IDL.Float64,
-});
-export const RevenueKPI = IDL.Record({
-  'trend' : IDL.Vec(DailyRevenue),
-  'revenueChange' : IDL.Float64,
-  'totalRevenue' : IDL.Float64,
-});
 export const Timestamp = IDL.Int;
-export const ActivityEvent = IDL.Record({
+export const ContactMessage = IDL.Record({
   'id' : IDL.Nat,
-  'userId' : IDL.Opt(IDL.Nat),
-  'description' : IDL.Text,
-  'timestamp' : Timestamp,
-  'eventType' : IDL.Text,
-});
-export const TodayHighlights = IDL.Record({
-  'activityFeed' : IDL.Vec(ActivityEvent),
-  'dailyRevenue' : IDL.Float64,
-  'newSignups' : IDL.Nat,
-});
-export const UserStatus = IDL.Variant({
-  'active' : IDL.Null,
-  'churned' : IDL.Null,
-  'inactive' : IDL.Null,
-});
-export const UserPlan = IDL.Variant({
-  'pro' : IDL.Null,
-  'enterprise' : IDL.Null,
-  'starter' : IDL.Null,
-  'free' : IDL.Null,
-});
-export const User = IDL.Record({
-  'id' : IDL.Nat,
-  'status' : UserStatus,
-  'pageViewsLast30Days' : IDL.Nat,
-  'signupDate' : IDL.Text,
   'name' : IDL.Text,
-  'plan' : UserPlan,
-  'sessionsLast30Days' : IDL.Nat,
   'email' : IDL.Text,
-  'totalRevenue' : IDL.Float64,
-  'lastActive' : IDL.Text,
+  'message' : IDL.Text,
+  'timestamp' : Timestamp,
 });
-export const UserActivity = IDL.Record({
-  'revenue' : IDL.Float64,
-  'date' : IDL.Text,
-  'sessions' : IDL.Nat,
-  'pageViews' : IDL.Nat,
-});
-export const UserDetail = IDL.Record({
-  'user' : User,
-  'activityHistory' : IDL.Vec(UserActivity),
-  'recentEvents' : IDL.Vec(ActivityEvent),
-});
+export const SubmitResult = IDL.Variant({ 'ok' : IDL.Null, 'err' : IDL.Text });
 
 export const idlService = IDL.Service({
-  'getHealthMetrics' : IDL.Func(
-      [IDL.Opt(DateRange)],
-      [HealthMetrics],
-      ['query'],
-    ),
-  'getRevenueKPI' : IDL.Func([IDL.Opt(DateRange)], [RevenueKPI], ['query']),
-  'getTodayHighlights' : IDL.Func([], [TodayHighlights], ['query']),
-  'getUserDetail' : IDL.Func([IDL.Nat], [IDL.Opt(UserDetail)], ['query']),
-  'listUsers' : IDL.Func(
-      [IDL.Opt(IDL.Text), IDL.Opt(UserPlan), IDL.Opt(UserStatus)],
-      [IDL.Vec(User)],
-      ['query'],
+  'getMessages' : IDL.Func([], [IDL.Vec(ContactMessage)], ['query']),
+  'submitContact' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text],
+      [SubmitResult],
+      [],
     ),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
-  const DateRange = IDL.Record({
-    'endDate' : IDL.Text,
-    'startDate' : IDL.Text,
-  });
-  const HealthMetrics = IDL.Record({
-    'activeUsers' : IDL.Nat,
-    'activeUsersChange' : IDL.Float64,
-    'conversionRate' : IDL.Float64,
-    'conversionRateChange' : IDL.Float64,
-    'churnRate' : IDL.Float64,
-    'churnRateChange' : IDL.Float64,
-  });
-  const DailyRevenue = IDL.Record({
-    'date' : IDL.Text,
-    'amount' : IDL.Float64,
-  });
-  const RevenueKPI = IDL.Record({
-    'trend' : IDL.Vec(DailyRevenue),
-    'revenueChange' : IDL.Float64,
-    'totalRevenue' : IDL.Float64,
-  });
   const Timestamp = IDL.Int;
-  const ActivityEvent = IDL.Record({
+  const ContactMessage = IDL.Record({
     'id' : IDL.Nat,
-    'userId' : IDL.Opt(IDL.Nat),
-    'description' : IDL.Text,
-    'timestamp' : Timestamp,
-    'eventType' : IDL.Text,
-  });
-  const TodayHighlights = IDL.Record({
-    'activityFeed' : IDL.Vec(ActivityEvent),
-    'dailyRevenue' : IDL.Float64,
-    'newSignups' : IDL.Nat,
-  });
-  const UserStatus = IDL.Variant({
-    'active' : IDL.Null,
-    'churned' : IDL.Null,
-    'inactive' : IDL.Null,
-  });
-  const UserPlan = IDL.Variant({
-    'pro' : IDL.Null,
-    'enterprise' : IDL.Null,
-    'starter' : IDL.Null,
-    'free' : IDL.Null,
-  });
-  const User = IDL.Record({
-    'id' : IDL.Nat,
-    'status' : UserStatus,
-    'pageViewsLast30Days' : IDL.Nat,
-    'signupDate' : IDL.Text,
     'name' : IDL.Text,
-    'plan' : UserPlan,
-    'sessionsLast30Days' : IDL.Nat,
     'email' : IDL.Text,
-    'totalRevenue' : IDL.Float64,
-    'lastActive' : IDL.Text,
+    'message' : IDL.Text,
+    'timestamp' : Timestamp,
   });
-  const UserActivity = IDL.Record({
-    'revenue' : IDL.Float64,
-    'date' : IDL.Text,
-    'sessions' : IDL.Nat,
-    'pageViews' : IDL.Nat,
-  });
-  const UserDetail = IDL.Record({
-    'user' : User,
-    'activityHistory' : IDL.Vec(UserActivity),
-    'recentEvents' : IDL.Vec(ActivityEvent),
-  });
+  const SubmitResult = IDL.Variant({ 'ok' : IDL.Null, 'err' : IDL.Text });
   
   return IDL.Service({
-    'getHealthMetrics' : IDL.Func(
-        [IDL.Opt(DateRange)],
-        [HealthMetrics],
-        ['query'],
-      ),
-    'getRevenueKPI' : IDL.Func([IDL.Opt(DateRange)], [RevenueKPI], ['query']),
-    'getTodayHighlights' : IDL.Func([], [TodayHighlights], ['query']),
-    'getUserDetail' : IDL.Func([IDL.Nat], [IDL.Opt(UserDetail)], ['query']),
-    'listUsers' : IDL.Func(
-        [IDL.Opt(IDL.Text), IDL.Opt(UserPlan), IDL.Opt(UserStatus)],
-        [IDL.Vec(User)],
-        ['query'],
+    'getMessages' : IDL.Func([], [IDL.Vec(ContactMessage)], ['query']),
+    'submitContact' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text],
+        [SubmitResult],
+        [],
       ),
   });
 };

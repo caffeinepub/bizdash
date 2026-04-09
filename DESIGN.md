@@ -1,47 +1,71 @@
-# Design Brief
+# Design Brief: VWEDE Web Dev
 
-## Tone & Context
-Modern analytics dashboard prioritizing data clarity and operational density. Dark mode as primary experience. Authoritative, contemporary, no ornamentation.
+## Direction
+VWEDE Web Dev — Professional no-code developer portfolio showcasing Caffeine AI expertise and web solutions for business growth.
 
-## Palette
-| Token | Light OKLCH | Dark OKLCH | Purpose |
-|-------|-------------|-----------|---------|
-| Primary | 0.52 0.16 247 | 0.65 0.18 142 | Actions, links, highlights |
-| Secondary | 0.5 0.12 136 | 0.55 0.18 70 | Tertiary controls |
-| Success | 0.65 0.18 142 | 0.65 0.18 142 | Growth, positive trends |
-| Warning | 0.62 0.16 30 | 0.72 0.16 30 | Alerts, caution states |
-| Destructive | 0.55 0.22 25 | 0.65 0.19 22 | Errors, dangerous actions |
-| Neutral | 0.92 0.01 0 | 0.22 0.02 0 | Muted, secondary text |
-| Background | 0.98 0.01 0 | 0.11 0.01 0 | Canvas |
+## Tone
+Bold, confident, modern sans-serif aesthetic. Minimal ornamentation lets typography and spacing create hierarchy — the design gets out of the way to let Vwede's expertise speak.
+
+## Differentiation
+Purple primary accent paired with vibrant gold for confidence moments (CTAs, "why no-code"). Typography-driven hierarchy with generous spacing creates editorial clarity while maintaining approachability.
+
+## Color Palette
+
+| Token      | Light OKLCH | Dark OKLCH | Role                                 |
+| ---------- | ----------- | ---------- | ------------------------------------ |
+| background | 0.98 0.01 0 | 0.12 0.01 0 | Canvas, main surface                 |
+| foreground | 0.15 0.02 0 | 0.93 0.01 0 | Primary text, high contrast          |
+| card       | 0.95 0.01 0 | 0.16 0.02 0 | Elevated surfaces, portfolio/service |
+| primary    | 0.65 0.18 142 | 0.65 0.18 142 | No-code brand, actions, focus       |
+| accent     | 0.68 0.22 70 | 0.78 0.18 70 | Confidence moments, warmer CTAs     |
+| muted      | 0.92 0.01 0 | 0.22 0.02 0 | Secondary text, subtle backgrounds  |
 
 ## Typography
-| Tier | Font | Usage |
-|------|------|-------|
-| Display | InstrumentSerif (Italic) | Headings, metric labels |
-| Body | GeneralSans | All prose, UI text |
-| Mono | GeistMono | Data values, code snippets |
+
+- Display: Plus Jakarta Sans — hero headings, section titles (geometric, confident)
+- Body: General Sans — all prose, UI text, form labels (clean, readable)
+- Scale: hero `text-5xl md:text-7xl font-bold`, h2 `text-3xl md:text-4xl font-bold`, label `text-sm font-semibold uppercase`, body `text-base`
+
+## Elevation & Depth
+
+Card layering (card bg on canvas bg) with 1px borders creates depth. No shadows or glows — rely on lightness contrast and spacing. Hover states use opacity and scale, not shadow amplification.
 
 ## Structural Zones
-| Zone | Style |
-|------|-------|
-| Sidebar | Dark charcoal (0.12 L), 1px border right |
-| Header | Card background (0.15 L dark), 1px border bottom, date picker |
-| Content | Background (0.11 L dark), card grid |
-| KPI Cards | 0.15 L dark bg, 1px border, no shadow |
-| Charts | Recharts with chart-1/2/3/4/5 tokens |
-| Footer | N/A |
 
-## Shape & Depth
-Minimal radius (4–8px). Subtle borders (1px, 24% contrast). No gradients or glows. Depth via layered grays, not shadows.
+| Zone     | Background               | Border    | Notes                                      |
+| -------- | ------------------------ | --------- | ------------------------------------------ |
+| Header   | card (0.95 L / 0.16 L)   | border-b  | Sticky, brand + nav links, 1px divider     |
+| Hero     | background (full-width)  | —         | Large typography, CTA button, breathing    |
+| About    | card (elevated)           | subtle    | Image + content, alternating grid          |
+| Services | background (light grid)  | —         | 3-column card grid, border per card        |
+| Portfolio| alternating sections     | subtle    | Project cards with image + description     |
+| Contact  | muted-foreground subtle  | —         | Dark background, form + email display      |
+| Footer   | card (0.95 L / 0.16 L)   | border-t  | Links, copyright, 1px divider              |
 
 ## Spacing & Rhythm
-Compact data density: 16px base, 8px micro. Gap scale: 4px, 8px, 12px, 16px, 24px. Sidebar 240px, content padding 24px.
+
+Sections: 40px mobile / 64px desktop padding. Card gap: 16px–24px. Micro-spacing: 8px, 12px. Typography drives rhythm — heading + subtitle + body with breathing room between sections.
 
 ## Component Patterns
-- KPI Cards: flex, gap-8, metric left, chart right, sparkline strip
-- User rows: table-like rows, hover highlight (24L)
-- Date picker: sidebar dropdown input
-- Activity feed: scrollable list, time-left, event-right
+
+- **CTA Button**: primary bg, rounded-lg, hover:opacity-90 + scale-[0.98], icon optional
+- **Cards**: card bg, 1px border, rounded-lg, shadow-subtle on hover
+- **Form**: input bg-card, border-border, focus:ring-2 ring-primary
+- **Navigation**: sticky header, font-body text-foreground, hover:text-primary, hamburger `md:hidden`
+
+## Motion
+
+- Entrance: fade-in on scroll (optional, subtle)
+- Hover: opacity + scale-[0.98] on interactive elements (150ms ease-out)
+- No decorative animations — focus on responsiveness and feedback
+
+## Constraints
+
+- Never use raw hex or RGB — all colors via OKLCH tokens
+- No full-page gradients or glow effects — depth via layering and contrast
+- Maintain 1.05 line-height minimum for readability
+- Responsive mobile-first: sm/md/lg breakpoints for stacking/grid
 
 ## Signature Detail
-Monospaced data labels above metric values. Chart sparklines with distinct hues. 1px borders + cool neutral palette = clinical precision.
+
+Purple + gold pairing creates visual confidence without neon aesthetic. Bold sans display paired with refined body font establishes authority while remaining approachable — befitting a developer who demystifies complex technical solutions through no-code.

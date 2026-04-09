@@ -1,11 +1,14 @@
-import Types "types/analytics";
+import Types "types/contact";
 import List "mo:core/List";
-import AnalyticsMixin "mixins/analytics-api";
+import ContactMixin "mixins/contact-api";
+
+
 
 actor {
 
-  let users : List.List<Types.User> = List.empty();
-  let events : List.List<Types.ActivityEvent> = List.empty();
+  let messages : List.List<Types.ContactMessage> = List.empty();
+  let nextId = { var value : Nat = 0 };
 
-  include AnalyticsMixin(users, events);
+  include ContactMixin(messages, nextId);
+
 };

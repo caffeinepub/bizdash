@@ -21,7 +21,7 @@ function applyTheme(theme: Theme) {
 export const useThemeStore = create<ThemeStore>()(
   persist(
     (set) => ({
-      theme: "dark",
+      theme: "light",
       toggleTheme: () =>
         set((state) => {
           const next: Theme = state.theme === "dark" ? "light" : "dark";
@@ -34,11 +34,9 @@ export const useThemeStore = create<ThemeStore>()(
       },
     }),
     {
-      name: "bizdash-theme",
+      name: "vwede-theme",
       onRehydrateStorage: () => (state) => {
-        if (state) {
-          applyTheme(state.theme);
-        }
+        if (state) applyTheme(state.theme);
       },
     },
   ),

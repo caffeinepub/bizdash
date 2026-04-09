@@ -10,73 +10,19 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export interface ActivityEvent {
+export interface ContactMessage {
   'id' : bigint,
-  'userId' : [] | [bigint],
-  'description' : string,
-  'timestamp' : Timestamp,
-  'eventType' : string,
-}
-export interface DailyRevenue { 'date' : string, 'amount' : number }
-export interface DateRange { 'endDate' : string, 'startDate' : string }
-export interface HealthMetrics {
-  'activeUsers' : bigint,
-  'activeUsersChange' : number,
-  'conversionRate' : number,
-  'conversionRateChange' : number,
-  'churnRate' : number,
-  'churnRateChange' : number,
-}
-export interface RevenueKPI {
-  'trend' : Array<DailyRevenue>,
-  'revenueChange' : number,
-  'totalRevenue' : number,
-}
-export type Timestamp = bigint;
-export interface TodayHighlights {
-  'activityFeed' : Array<ActivityEvent>,
-  'dailyRevenue' : number,
-  'newSignups' : bigint,
-}
-export interface User {
-  'id' : bigint,
-  'status' : UserStatus,
-  'pageViewsLast30Days' : bigint,
-  'signupDate' : string,
   'name' : string,
-  'plan' : UserPlan,
-  'sessionsLast30Days' : bigint,
   'email' : string,
-  'totalRevenue' : number,
-  'lastActive' : string,
+  'message' : string,
+  'timestamp' : Timestamp,
 }
-export interface UserActivity {
-  'revenue' : number,
-  'date' : string,
-  'sessions' : bigint,
-  'pageViews' : bigint,
-}
-export interface UserDetail {
-  'user' : User,
-  'activityHistory' : Array<UserActivity>,
-  'recentEvents' : Array<ActivityEvent>,
-}
-export type UserPlan = { 'pro' : null } |
-  { 'enterprise' : null } |
-  { 'starter' : null } |
-  { 'free' : null };
-export type UserStatus = { 'active' : null } |
-  { 'churned' : null } |
-  { 'inactive' : null };
+export type SubmitResult = { 'ok' : null } |
+  { 'err' : string };
+export type Timestamp = bigint;
 export interface _SERVICE {
-  'getHealthMetrics' : ActorMethod<[[] | [DateRange]], HealthMetrics>,
-  'getRevenueKPI' : ActorMethod<[[] | [DateRange]], RevenueKPI>,
-  'getTodayHighlights' : ActorMethod<[], TodayHighlights>,
-  'getUserDetail' : ActorMethod<[bigint], [] | [UserDetail]>,
-  'listUsers' : ActorMethod<
-    [[] | [string], [] | [UserPlan], [] | [UserStatus]],
-    Array<User>
-  >,
+  'getMessages' : ActorMethod<[], Array<ContactMessage>>,
+  'submitContact' : ActorMethod<[string, string, string], SubmitResult>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

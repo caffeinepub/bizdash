@@ -89,342 +89,77 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface UserDetail {
-    user: User;
-    activityHistory: Array<UserActivity>;
-    recentEvents: Array<ActivityEvent>;
-}
+export type SubmitResult = {
+    __kind__: "ok";
+    ok: null;
+} | {
+    __kind__: "err";
+    err: string;
+};
 export type Timestamp = bigint;
-export interface DateRange {
-    endDate: string;
-    startDate: string;
-}
-export interface TodayHighlights {
-    activityFeed: Array<ActivityEvent>;
-    dailyRevenue: number;
-    newSignups: bigint;
-}
-export interface User {
+export interface ContactMessage {
     id: bigint;
-    status: UserStatus;
-    pageViewsLast30Days: bigint;
-    signupDate: string;
     name: string;
-    plan: UserPlan;
-    sessionsLast30Days: bigint;
     email: string;
-    totalRevenue: number;
-    lastActive: string;
-}
-export interface RevenueKPI {
-    trend: Array<DailyRevenue>;
-    revenueChange: number;
-    totalRevenue: number;
-}
-export interface HealthMetrics {
-    activeUsers: bigint;
-    activeUsersChange: number;
-    conversionRate: number;
-    conversionRateChange: number;
-    churnRate: number;
-    churnRateChange: number;
-}
-export interface ActivityEvent {
-    id: bigint;
-    userId?: bigint;
-    description: string;
+    message: string;
     timestamp: Timestamp;
-    eventType: string;
-}
-export interface UserActivity {
-    revenue: number;
-    date: string;
-    sessions: bigint;
-    pageViews: bigint;
-}
-export interface DailyRevenue {
-    date: string;
-    amount: number;
-}
-export enum UserPlan {
-    pro = "pro",
-    enterprise = "enterprise",
-    starter = "starter",
-    free = "free"
-}
-export enum UserStatus {
-    active = "active",
-    churned = "churned",
-    inactive = "inactive"
 }
 export interface backendInterface {
-    getHealthMetrics(dateRange: DateRange | null): Promise<HealthMetrics>;
-    getRevenueKPI(dateRange: DateRange | null): Promise<RevenueKPI>;
-    getTodayHighlights(): Promise<TodayHighlights>;
-    getUserDetail(userId: bigint): Promise<UserDetail | null>;
-    listUsers(search: string | null, planFilter: UserPlan | null, statusFilter: UserStatus | null): Promise<Array<User>>;
+    getMessages(): Promise<Array<ContactMessage>>;
+    submitContact(name: string, email: string, message: string): Promise<SubmitResult>;
 }
-import type { ActivityEvent as _ActivityEvent, DateRange as _DateRange, Timestamp as _Timestamp, TodayHighlights as _TodayHighlights, User as _User, UserActivity as _UserActivity, UserDetail as _UserDetail, UserPlan as _UserPlan, UserStatus as _UserStatus } from "./declarations/backend.did.d.ts";
+import type { SubmitResult as _SubmitResult } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
-    async getHealthMetrics(arg0: DateRange | null): Promise<HealthMetrics> {
+    async getMessages(): Promise<Array<ContactMessage>> {
         if (this.processError) {
             try {
-                const result = await this.actor.getHealthMetrics(to_candid_opt_n1(this._uploadFile, this._downloadFile, arg0));
+                const result = await this.actor.getMessages();
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.getHealthMetrics(to_candid_opt_n1(this._uploadFile, this._downloadFile, arg0));
+            const result = await this.actor.getMessages();
             return result;
         }
     }
-    async getRevenueKPI(arg0: DateRange | null): Promise<RevenueKPI> {
+    async submitContact(arg0: string, arg1: string, arg2: string): Promise<SubmitResult> {
         if (this.processError) {
             try {
-                const result = await this.actor.getRevenueKPI(to_candid_opt_n1(this._uploadFile, this._downloadFile, arg0));
-                return result;
+                const result = await this.actor.submitContact(arg0, arg1, arg2);
+                return from_candid_SubmitResult_n1(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.getRevenueKPI(to_candid_opt_n1(this._uploadFile, this._downloadFile, arg0));
-            return result;
-        }
-    }
-    async getTodayHighlights(): Promise<TodayHighlights> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getTodayHighlights();
-                return from_candid_TodayHighlights_n2(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getTodayHighlights();
-            return from_candid_TodayHighlights_n2(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async getUserDetail(arg0: bigint): Promise<UserDetail | null> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getUserDetail(arg0);
-                return from_candid_opt_n8(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getUserDetail(arg0);
-            return from_candid_opt_n8(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async listUsers(arg0: string | null, arg1: UserPlan | null, arg2: UserStatus | null): Promise<Array<User>> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.listUsers(to_candid_opt_n17(this._uploadFile, this._downloadFile, arg0), to_candid_opt_n18(this._uploadFile, this._downloadFile, arg1), to_candid_opt_n21(this._uploadFile, this._downloadFile, arg2));
-                return from_candid_vec_n24(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.listUsers(to_candid_opt_n17(this._uploadFile, this._downloadFile, arg0), to_candid_opt_n18(this._uploadFile, this._downloadFile, arg1), to_candid_opt_n21(this._uploadFile, this._downloadFile, arg2));
-            return from_candid_vec_n24(this._uploadFile, this._downloadFile, result);
+            const result = await this.actor.submitContact(arg0, arg1, arg2);
+            return from_candid_SubmitResult_n1(this._uploadFile, this._downloadFile, result);
         }
     }
 }
-function from_candid_ActivityEvent_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _ActivityEvent): ActivityEvent {
-    return from_candid_record_n6(_uploadFile, _downloadFile, value);
+function from_candid_SubmitResult_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _SubmitResult): SubmitResult {
+    return from_candid_variant_n2(_uploadFile, _downloadFile, value);
 }
-function from_candid_TodayHighlights_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _TodayHighlights): TodayHighlights {
-    return from_candid_record_n3(_uploadFile, _downloadFile, value);
-}
-function from_candid_UserDetail_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserDetail): UserDetail {
-    return from_candid_record_n10(_uploadFile, _downloadFile, value);
-}
-function from_candid_UserPlan_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserPlan): UserPlan {
-    return from_candid_variant_n16(_uploadFile, _downloadFile, value);
-}
-function from_candid_UserStatus_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserStatus): UserStatus {
-    return from_candid_variant_n14(_uploadFile, _downloadFile, value);
-}
-function from_candid_User_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _User): User {
-    return from_candid_record_n12(_uploadFile, _downloadFile, value);
-}
-function from_candid_opt_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [bigint]): bigint | null {
-    return value.length === 0 ? null : value[0];
-}
-function from_candid_opt_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserDetail]): UserDetail | null {
-    return value.length === 0 ? null : from_candid_UserDetail_n9(_uploadFile, _downloadFile, value[0]);
-}
-function from_candid_record_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    user: _User;
-    activityHistory: Array<_UserActivity>;
-    recentEvents: Array<_ActivityEvent>;
+function from_candid_variant_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    ok: null;
+} | {
+    err: string;
 }): {
-    user: User;
-    activityHistory: Array<UserActivity>;
-    recentEvents: Array<ActivityEvent>;
+    __kind__: "ok";
+    ok: null;
+} | {
+    __kind__: "err";
+    err: string;
 } {
-    return {
-        user: from_candid_User_n11(_uploadFile, _downloadFile, value.user),
-        activityHistory: value.activityHistory,
-        recentEvents: from_candid_vec_n4(_uploadFile, _downloadFile, value.recentEvents)
-    };
-}
-function from_candid_record_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    id: bigint;
-    status: _UserStatus;
-    pageViewsLast30Days: bigint;
-    signupDate: string;
-    name: string;
-    plan: _UserPlan;
-    sessionsLast30Days: bigint;
-    email: string;
-    totalRevenue: number;
-    lastActive: string;
-}): {
-    id: bigint;
-    status: UserStatus;
-    pageViewsLast30Days: bigint;
-    signupDate: string;
-    name: string;
-    plan: UserPlan;
-    sessionsLast30Days: bigint;
-    email: string;
-    totalRevenue: number;
-    lastActive: string;
-} {
-    return {
-        id: value.id,
-        status: from_candid_UserStatus_n13(_uploadFile, _downloadFile, value.status),
-        pageViewsLast30Days: value.pageViewsLast30Days,
-        signupDate: value.signupDate,
-        name: value.name,
-        plan: from_candid_UserPlan_n15(_uploadFile, _downloadFile, value.plan),
-        sessionsLast30Days: value.sessionsLast30Days,
-        email: value.email,
-        totalRevenue: value.totalRevenue,
-        lastActive: value.lastActive
-    };
-}
-function from_candid_record_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    activityFeed: Array<_ActivityEvent>;
-    dailyRevenue: number;
-    newSignups: bigint;
-}): {
-    activityFeed: Array<ActivityEvent>;
-    dailyRevenue: number;
-    newSignups: bigint;
-} {
-    return {
-        activityFeed: from_candid_vec_n4(_uploadFile, _downloadFile, value.activityFeed),
-        dailyRevenue: value.dailyRevenue,
-        newSignups: value.newSignups
-    };
-}
-function from_candid_record_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    id: bigint;
-    userId: [] | [bigint];
-    description: string;
-    timestamp: _Timestamp;
-    eventType: string;
-}): {
-    id: bigint;
-    userId?: bigint;
-    description: string;
-    timestamp: Timestamp;
-    eventType: string;
-} {
-    return {
-        id: value.id,
-        userId: record_opt_to_undefined(from_candid_opt_n7(_uploadFile, _downloadFile, value.userId)),
-        description: value.description,
-        timestamp: value.timestamp,
-        eventType: value.eventType
-    };
-}
-function from_candid_variant_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    active: null;
-} | {
-    churned: null;
-} | {
-    inactive: null;
-}): UserStatus {
-    return "active" in value ? UserStatus.active : "churned" in value ? UserStatus.churned : "inactive" in value ? UserStatus.inactive : value;
-}
-function from_candid_variant_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    pro: null;
-} | {
-    enterprise: null;
-} | {
-    starter: null;
-} | {
-    free: null;
-}): UserPlan {
-    return "pro" in value ? UserPlan.pro : "enterprise" in value ? UserPlan.enterprise : "starter" in value ? UserPlan.starter : "free" in value ? UserPlan.free : value;
-}
-function from_candid_vec_n24(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_User>): Array<User> {
-    return value.map((x)=>from_candid_User_n11(_uploadFile, _downloadFile, x));
-}
-function from_candid_vec_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_ActivityEvent>): Array<ActivityEvent> {
-    return value.map((x)=>from_candid_ActivityEvent_n5(_uploadFile, _downloadFile, x));
-}
-function to_candid_UserPlan_n19(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserPlan): _UserPlan {
-    return to_candid_variant_n20(_uploadFile, _downloadFile, value);
-}
-function to_candid_UserStatus_n22(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserStatus): _UserStatus {
-    return to_candid_variant_n23(_uploadFile, _downloadFile, value);
-}
-function to_candid_opt_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: DateRange | null): [] | [_DateRange] {
-    return value === null ? candid_none() : candid_some(value);
-}
-function to_candid_opt_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: string | null): [] | [string] {
-    return value === null ? candid_none() : candid_some(value);
-}
-function to_candid_opt_n18(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserPlan | null): [] | [_UserPlan] {
-    return value === null ? candid_none() : candid_some(to_candid_UserPlan_n19(_uploadFile, _downloadFile, value));
-}
-function to_candid_opt_n21(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserStatus | null): [] | [_UserStatus] {
-    return value === null ? candid_none() : candid_some(to_candid_UserStatus_n22(_uploadFile, _downloadFile, value));
-}
-function to_candid_variant_n20(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserPlan): {
-    pro: null;
-} | {
-    enterprise: null;
-} | {
-    starter: null;
-} | {
-    free: null;
-} {
-    return value == UserPlan.pro ? {
-        pro: null
-    } : value == UserPlan.enterprise ? {
-        enterprise: null
-    } : value == UserPlan.starter ? {
-        starter: null
-    } : value == UserPlan.free ? {
-        free: null
-    } : value;
-}
-function to_candid_variant_n23(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserStatus): {
-    active: null;
-} | {
-    churned: null;
-} | {
-    inactive: null;
-} {
-    return value == UserStatus.active ? {
-        active: null
-    } : value == UserStatus.churned ? {
-        churned: null
-    } : value == UserStatus.inactive ? {
-        inactive: null
+    return "ok" in value ? {
+        __kind__: "ok",
+        ok: value.ok
+    } : "err" in value ? {
+        __kind__: "err",
+        err: value.err
     } : value;
 }
 export interface CreateActorOptions {

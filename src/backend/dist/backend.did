@@ -1,87 +1,18 @@
-type UserStatus = 
+type Timestamp = int;
+type SubmitResult = 
  variant {
-   active;
-   churned;
-   inactive;
+   err: text;
+   ok;
  };
-type UserPlan = 
- variant {
-   enterprise;
-   free;
-   pro;
-   starter;
- };
-type UserDetail = 
- record {
-   activityHistory: vec UserActivity;
-   recentEvents: vec ActivityEvent;
-   user: User;
- };
-type UserActivity = 
- record {
-   date: text;
-   pageViews: nat;
-   revenue: float64;
-   sessions: nat;
- };
-type User = 
+type ContactMessage = 
  record {
    email: text;
    id: nat;
-   lastActive: text;
+   message: text;
    name: text;
-   pageViewsLast30Days: nat;
-   plan: UserPlan;
-   sessionsLast30Days: nat;
-   signupDate: text;
-   status: UserStatus;
-   totalRevenue: float64;
- };
-type TodayHighlights = 
- record {
-   activityFeed: vec ActivityEvent;
-   dailyRevenue: float64;
-   newSignups: nat;
- };
-type Timestamp = int;
-type RevenueKPI = 
- record {
-   revenueChange: float64;
-   totalRevenue: float64;
-   trend: vec DailyRevenue;
- };
-type HealthMetrics = 
- record {
-   activeUsers: nat;
-   activeUsersChange: float64;
-   churnRate: float64;
-   churnRateChange: float64;
-   conversionRate: float64;
-   conversionRateChange: float64;
- };
-type DateRange = 
- record {
-   endDate: text;
-   startDate: text;
- };
-type DailyRevenue = 
- record {
-   amount: float64;
-   date: text;
- };
-type ActivityEvent = 
- record {
-   description: text;
-   eventType: text;
-   id: nat;
    timestamp: Timestamp;
-   userId: opt nat;
  };
 service : {
-  getHealthMetrics: (dateRange: opt DateRange) -> (HealthMetrics) query;
-  getRevenueKPI: (dateRange: opt DateRange) -> (RevenueKPI) query;
-  getTodayHighlights: () -> (TodayHighlights) query;
-  getUserDetail: (userId: nat) -> (opt UserDetail) query;
-  listUsers: (search: opt text, planFilter: opt UserPlan, statusFilter:
-   opt UserStatus) -> (vec User) query;
+  getMessages: () -> (vec ContactMessage) query;
+  submitContact: (name: text, email: text, message: text) -> (SubmitResult);
 }

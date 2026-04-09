@@ -1,28 +1,17 @@
 import type { backendInterface } from "../backend";
 
 export const mockBackend: backendInterface = {
-  getRevenueKPI: async (_dateRange) => ({
-    totalRevenue: 0,
-    revenueChange: 0,
-    trend: [],
+  getMessages: async () => [
+    {
+      id: BigInt(1),
+      name: "Jane Doe",
+      email: "jane@example.com",
+      message: "Hi Vwede, I'd love to discuss a web project with you!",
+      timestamp: BigInt(Date.now()) * BigInt(1_000_000),
+    },
+  ],
+  submitContact: async (_name: string, _email: string, _message: string) => ({
+    __kind__: "ok" as const,
+    ok: null,
   }),
-
-  getHealthMetrics: async (_dateRange) => ({
-    conversionRate: 0,
-    conversionRateChange: 0,
-    churnRate: 0,
-    churnRateChange: 0,
-    activeUsers: BigInt(0),
-    activeUsersChange: 0,
-  }),
-
-  getTodayHighlights: async () => ({
-    dailyRevenue: 0,
-    newSignups: BigInt(0),
-    activityFeed: [],
-  }),
-
-  getUserDetail: async (_userId) => null,
-
-  listUsers: async (_search, _planFilter, _statusFilter) => [],
 };

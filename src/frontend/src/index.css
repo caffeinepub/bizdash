@@ -4,40 +4,40 @@
 
 @layer base {
   :root {
-    --font-display: "InstrumentSerif", serif;
+    --font-display: "PlusJakartaSans", sans-serif;
     --font-body: "GeneralSans", sans-serif;
     --font-mono: "GeistMono", monospace;
     --radius: 0.5rem;
 
     --background: 0.98 0.01 0;
-    --foreground: 0.2 0.02 0;
-    --card: 1.0 0 0;
+    --foreground: 0.15 0.02 0;
+    --card: 0.95 0.01 0;
     --card-foreground: 0.15 0.02 0;
-    --popover: 0.99 0.01 0;
+    --popover: 0.96 0.01 0;
     --popover-foreground: 0.15 0.02 0;
 
-    --primary: 0.52 0.16 247;
+    --primary: 0.65 0.18 142;
     --primary-foreground: 0.98 0 0;
 
-    --secondary: 0.5 0.12 136;
+    --secondary: 0.55 0.18 70;
     --secondary-foreground: 0.98 0 0;
     --muted: 0.92 0.01 0;
-    --muted-foreground: 0.5 0.02 0;
+    --muted-foreground: 0.55 0.02 0;
 
-    --accent: 0.65 0.18 142;
+    --accent: 0.68 0.22 70;
     --accent-foreground: 0.98 0 0;
 
     --destructive: 0.55 0.22 25;
     --destructive-foreground: 0.98 0 0;
 
     --border: 0.93 0.01 0;
-    --input: 0.95 0.01 0;
-    --ring: 0.52 0.16 247;
+    --input: 0.94 0.01 0;
+    --ring: 0.65 0.18 142;
 
     --chart-1: 0.65 0.18 142;
-    --chart-2: 0.55 0.18 70;
+    --chart-2: 0.68 0.18 70;
     --chart-3: 0.62 0.16 30;
-    --chart-4: 0.52 0.16 247;
+    --chart-4: 0.55 0.18 70;
     --chart-5: 0.5 0.12 136;
 
     --sidebar: 0.15 0.02 0;
@@ -46,49 +46,49 @@
     --sidebar-primary-foreground: 0.15 0.02 0;
     --sidebar-accent: 0.25 0.03 0;
     --sidebar-accent-foreground: 0.9 0.01 0;
-    --sidebar-border: 0.22 0.02 0;
+    --sidebar-border: 0.93 0.01 0;
     --sidebar-ring: 0.65 0.18 142;
   }
 
   .dark {
-    --background: 0.11 0.01 0;
-    --foreground: 0.95 0.01 0;
-    --card: 0.15 0.02 0;
-    --card-foreground: 0.95 0.01 0;
-    --popover: 0.18 0.02 0;
-    --popover-foreground: 0.95 0.01 0;
+    --background: 0.12 0.01 0;
+    --foreground: 0.93 0.01 0;
+    --card: 0.16 0.02 0;
+    --card-foreground: 0.93 0.01 0;
+    --popover: 0.19 0.02 0;
+    --popover-foreground: 0.93 0.01 0;
 
     --primary: 0.65 0.18 142;
-    --primary-foreground: 0.11 0.01 0;
+    --primary-foreground: 0.98 0 0;
 
     --secondary: 0.55 0.18 70;
-    --secondary-foreground: 0.95 0.01 0;
+    --secondary-foreground: 0.93 0.01 0;
     --muted: 0.22 0.02 0;
     --muted-foreground: 0.6 0.02 0;
 
-    --accent: 0.72 0.16 30;
-    --accent-foreground: 0.11 0.01 0;
+    --accent: 0.78 0.18 70;
+    --accent-foreground: 0.12 0.01 0;
 
     --destructive: 0.65 0.19 22;
-    --destructive-foreground: 0.95 0.01 0;
+    --destructive-foreground: 0.93 0.01 0;
 
-    --border: 0.24 0.02 0;
-    --input: 0.24 0.02 0;
+    --border: 0.25 0.02 0;
+    --input: 0.25 0.02 0;
     --ring: 0.65 0.18 142;
 
     --chart-1: 0.65 0.18 142;
-    --chart-2: 0.55 0.18 70;
+    --chart-2: 0.68 0.18 70;
     --chart-3: 0.72 0.16 30;
-    --chart-4: 0.52 0.16 247;
+    --chart-4: 0.55 0.18 70;
     --chart-5: 0.5 0.12 136;
 
     --sidebar: 0.12 0.01 0;
-    --sidebar-foreground: 0.95 0.01 0;
+    --sidebar-foreground: 0.93 0.01 0;
     --sidebar-primary: 0.65 0.18 142;
-    --sidebar-primary-foreground: 0.11 0.01 0;
+    --sidebar-primary-foreground: 0.98 0 0;
     --sidebar-accent: 0.22 0.02 0;
     --sidebar-accent-foreground: 0.85 0.01 0;
-    --sidebar-border: 0.2 0.02 0;
+    --sidebar-border: 0.25 0.02 0;
     --sidebar-ring: 0.65 0.18 142;
   }
 
@@ -107,26 +107,54 @@
   .data-label {
     @apply text-xs font-mono text-muted-foreground uppercase tracking-wider;
   }
-  .metric-value {
-    @apply text-2xl font-display font-semibold text-foreground;
+  .hero-title {
+    @apply text-5xl md:text-7xl font-display font-bold text-foreground leading-[1.05];
   }
-  .sparkline-container {
-    @apply flex items-end gap-1 h-12;
+  .section-title {
+    @apply text-3xl md:text-4xl font-display font-bold text-foreground;
   }
+  .section-subtitle {
+    @apply text-lg md:text-xl font-body text-muted-foreground leading-relaxed;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+  .cta-button {
+    @apply bg-primary text-primary-foreground font-semibold rounded-lg transition-smooth hover:opacity-90 active:scale-[0.98];
+  }
+  .secondary-button {
+    @apply bg-card text-foreground border border-border font-semibold rounded-lg transition-smooth hover:bg-muted;
+  }
+  .nav-link {
+    @apply text-foreground hover:text-primary transition-smooth font-medium;
+  }
+  .shadow-subtle {
+    box-shadow: 0 1px 3px 0 oklch(0 0 0 / 0.07), 0 1px 2px -1px
+      oklch(0 0 0 / 0.07);
+  }
+  .gradient-accent {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--primary)),
+      oklch(var(--accent))
+    );
+  }
+  .accent-text {
+    @apply text-accent font-semibold;
+  }
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "GeneralSans";
   src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
   font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "InstrumentSerif";
-  src: url("/assets/fonts/InstrumentSerif-Italic.woff2") format("woff2");
-  font-style: italic;
-  font-weight: 400;
   font-display: swap;
 }
 

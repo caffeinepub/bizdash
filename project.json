@@ -1,22 +1,23 @@
 {
-  "overview": "BizDash is a business analytics dashboard for tracking revenue, managing users, and monitoring daily business performance with real-time insights and trend visualizations.",
+  "overview": "Professional personal website for Vwede, a no-code developer specializing in Caffeine AI. Showcases his services — websites, apps, web apps, and business solutions — with a portfolio section, about section, and a contact form for visitors to reach him directly.",
   "features": [
-    "Revenue KPI cards with 30-day sparkline trend charts",
-    "User directory with search, filters, and per-user detail pages",
-    "Business health metrics: churn rate, conversion rate, active users with period-over-period comparisons",
-    "Today's highlights: daily revenue, new signups, and activity feed",
-    "Global date range picker controlling all charts and metrics",
-    "Sidebar navigation with dark/light mode toggle"
+    "Hero section introducing Vwede as a Caffeine AI developer",
+    "About section with background and expertise",
+    "Services section with specific categories: websites, apps, web apps, e-commerce, business automation",
+    "Portfolio section showcasing 2-3 example projects",
+    "Contact page with form saving messages to backend and prominent email display",
+    "Professional top navigation bar with mobile responsive menu",
+    "Dark/light mode toggle",
+    "Smooth scroll and polished animations"
   ],
-  "category": "analytics-business-intelligence",
+  "category": "portfolio-personal-sites",
   "tags": [
-    "analytics",
-    "dashboard",
-    "business",
-    "revenue",
-    "kpi",
-    "charts",
-    "dark-mode"
+    "portfolio",
+    "personal-website",
+    "no-code",
+    "caffeine-ai",
+    "developer",
+    "contact-form"
   ],
-  "last_updated": "2026-04-07T21:43:18.978Z"
+  "last_updated": "2026-04-09T00:46:40.557Z"
 }
